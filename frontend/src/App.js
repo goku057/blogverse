@@ -13,6 +13,7 @@ import EditBlog from './components/EditBlog';
 import Search from './components/Search';
 import Verify from './components/Verify';
 import Dummy from "./components/Dummy";
+import Land from "./components/Land";
 
 function App() {
   // let isLoggedIn = useSelector( state => {
@@ -24,6 +25,7 @@ function App() {
         <Navbar></Navbar>
 
         <Routes>
+        <Route path='/' element={<Land/>}/>
           <Route path='/auth' element={<Auth/>}/>
           <Route path='/blogs' element={<Blogs/>}/>
           <Route path='/myBlogs' element={<UserBlogs/>}/>

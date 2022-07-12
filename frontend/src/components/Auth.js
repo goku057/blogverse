@@ -41,6 +41,7 @@ const Auth = () => {
         }
         catch(e){
             console.log("failed to connect to backend");
+            alert("Failed to connect to server");
         }
         return r;
     }
