@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { Box, Button, TextareaAutosize, TextField, Typography} from '@mui/material';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import BlogForm from './BlogForm';
 
-const AddBlog = () => {
+
+const AddBlog = (props) => {
+
     return (
         <div>
-            <h1>This is add blog page</h1>
+            <BlogForm actionType="create" title="" body="" cat=""/>
         </div>
     );
 };

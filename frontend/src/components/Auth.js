@@ -1,11 +1,17 @@
 import { Box, Button, TextField, Typography} from '@mui/material';
 import React, { useState } from 'react';
 import axios from "axios";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { authActions } from '../store';
 import {useNavigate} from "react-router-dom"
+import { confirm } from 'react-confirm-box';
 
 const Auth = () => {
+    
+    let sessionInfo = useSelector( state => {
+        return state;
+      });
+    console.log(sessionInfo);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isSignup, setIsSignup] =  useState(false);
@@ -42,10 +48,10 @@ const Auth = () => {
         e.preventDefault();
         if(isSignup){
             sendReq("signup").then((data) => {
-                if(data.valid == true){
+                if(data.valid === true){
                     
                     dispatch(authActions.login(data))
-                    
+                    navigate("/blogs");
                 }
                 else{
                     console.log("couldnt login");
@@ -55,12 +61,15 @@ const Auth = () => {
         }
         else{
             sendReq("login").then((data) => {
-                if(data.valid == true){
+                if(data.valid === true){
                     
                     dispatch(authActions.login(data))
+                    navigate("/blogs");
                 }
                 else{
                     console.log("couldnt login");
+                    // alert("Couldnt login");
+                    confirm("Your username and pass is mismatched");
                 }
                 console.log(data);
         });

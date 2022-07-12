@@ -1,25 +1,22 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import BlogCard from './BlogCard';
+import { useNavigate, useParams } from 'react-router-dom';
+import BlogForm from './BlogForm';
 
-const Blogs = () => {
-
-    const [blogs, setBlogs] = useState([]);
-    const navigate = useNavigate();
-    // console.log(props.params);
+const EditBlog = () => {
+    const {pid} = useParams();
+    console.log(pid);
+    const [blogs, setBlogs] = useState(false);
+    
     let sessionInfo = useSelector( state => {
         return state;
       });
-    
-      
-    
-    const getBlogs = async ()=>{
+      const getBlogs = async ()=>{
         let res;
         let blog;
         try{
-            res = await axios.get("http://localhost:5000/blog/newsfeed");
+            res = await axios.post("http://localhost:5000/blog/getBlog", {blogID: pid});
             blog = await res.data;
             // setBlogs(blog);
             // console.log(blogs);
@@ -29,7 +26,7 @@ const Blogs = () => {
         }
         return blog;
     }
-   
+    const navigate = useNavigate();
     useEffect(() => {
 
         if(sessionInfo.isLoggedin === false){
@@ -41,14 +38,17 @@ const Blogs = () => {
             // console.log("databse er kam shesh");
         });
         // setBlogs([1,2 ,3]);
-        console.log("My Blogs component deployed!!!");
+        console.log("edit blogs component deployed!!!");
+
     }, []);
-    // console.log( blogs);
+
+
+
     return (
         <div>
-            <h1>{blogs ? blogs.map( (val, index) => (<BlogCard key={val.id} blogID = {val.id} title={val.title} body={val.body} cat={val.cat} postTime={val.post_time} username={val.username} userID={val.user_id} />)) : "No posts available"}</h1>
+           { blogs ? <BlogForm actionType="updateBlog" blogID={blogs[0].id} title={blogs[0].title} body={blogs[0].body} cat={blogs[0].cat}/> : "error"}
         </div>
     );
 };
 
-export default Blogs;
+export default EditBlog;

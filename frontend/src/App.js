@@ -7,7 +7,11 @@ import Blogs from './components/Blogs';
 import UserBlogs from './components/UserBlogs';
 import BlogInfo from './components/BlogInfo';
 import AddBlog from './components/AddBlog';
+import BlogCard from './components/BlogCard';
+import EditBlog from './components/EditBlog';
 // import {useSelector} from "react-redux";
+import Search from './components/Search';
+
 
 function App() {
   // let isLoggedIn = useSelector( state => {
@@ -22,9 +26,10 @@ function App() {
           <Route path='/auth' element={<Auth/>}/>
           <Route path='/blogs' element={<Blogs/>}/>
           <Route path='/myBlogs' element={<UserBlogs/>}/>
-          <Route path='/blogInfo' element={<BlogInfo/>}/>
-          <Route path='/blogs/add' element={<AddBlog/>}/>
-
+          <Route path='/blogInfo/:pid' element={<BlogInfo/>}/>
+          <Route path='/blogs/add' element={<AddBlog />}/>
+          <Route path='/blogs/edit/:pid' element={<EditBlog/>}/>
+          <Route path='/search' element={<Search/>}/>
         </Routes>
       </React.Fragment>
     </div>

@@ -26,6 +26,7 @@ const login = async (req, res) => {
                 valid : true,
                 verified: result[0].verified,
                 userID : result[0].id,
+                username: result[0].username,
                 msg: "success"
             }
             res.cookie("sessionID", "logged in");

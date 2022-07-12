@@ -10,19 +10,21 @@ const createBlog = async (userID, title, body, cat) => {
 }
 
 const getBlogs = async () => {
-    let sqlCommand = `SELECT blog.id, user_id, title, body, cat, post_time, share, username FROM blog JOIN user ON user.id = blog.user_id WHERE cat = 1;`;
+    let sqlCommand = `SELECT blog.id, user_id, title, body, cat, post_time, share, username FROM blog JOIN user ON user.id = blog.user_id WHERE share = 1  ORDER BY blog.post_time DESC;`;
     let result = await query(sqlCommand);
+    // console.log(result);
     return result;
 }
 
 const getUserBlogs = async  (userID) => {
-    let sqlCommand = `SELECT id, user_id, title, body, cat, post_time, share FROM blog WHERE id = ${userID};`;
+    let sqlCommand = `SELECT blog.id, user_id, title, body, cat, post_time, share, username FROM blog JOIN user ON user.id = blog.user_id WHERE user_id = ${userID} ORDER BY post_time DESC;`;
     let result = await query(sqlCommand);
+    // console.log(result);
     return result;
 }
 
 const getOneBlog = async (blogID) =>{
-    let sqlCommand = `SELECT id, user_id, title, body, cat, post_time, share FROM blog WHERE id = ${blogID};`;
+    let sqlCommand = `SELECT blog.id, user_id, title, body, cat, post_time, share, username FROM blog JOIN user ON user.id = blog.user_id WHERE blog.id = ${blogID};`;
     let result = await query(sqlCommand);
     return result;
 }
@@ -45,6 +47,35 @@ const shareBlog = async (blogID) =>{
     return result;
 }
 
+
+
+const getCommentCount = async (blogID) =>{
+    let sqlCommand = `SELECT COUNT(comments.id) AS comment_count FROM comments WHERE blog_id = ${blogID};`;
+    let result = await query(sqlCommand);
+    return result;
+}
+
+const createComment = async (blogID, body, userID) =>{
+    let sqlCommand = `INSERT INTO comments(user_id, blog_id, body) VALUES ( ${userID}, ${blogID}, '${body}');`;
+    let result = await query(sqlCommand);
+    return result;
+}
+
+const getCommentOfPost = async (blogID) =>{
+    let sqlCommand = `SELECT c.id, c.user_id, blog_id, c.body, c.post_time,username FROM comments AS c JOIN blog AS b ON c.blog_id = b.id JOIN user ON user.id = c.user_id WHERE b.id = ${blogID} ORDER BY c.post_time DESC;`;
+    let result = await query(sqlCommand);
+    return result;
+}
+
+
+const getSearchBlogs = async (search) => {
+    let sqlCommand = `SELECT blog.id, user_id, title, body, cat, post_time, share, username FROM blog JOIN user ON user.id = blog.user_id WHERE share = 1 AND (title LIKE "%${search}%" OR cat LIKE "%${search}%")  ORDER BY blog.post_time DESC;`;
+    let result = await query(sqlCommand);
+    // console.log(result);
+    return result;
+}
+
+
 module.exports = {
     createBlog,
     getBlogs,
@@ -52,5 +83,9 @@ module.exports = {
     getOneBlog,
     updateBlog,
     deleteBlog,
-    shareBlog
+    shareBlog,
+    getCommentCount,
+    createComment,
+    getCommentOfPost,
+    getSearchBlogs
 }
