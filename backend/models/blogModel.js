@@ -69,7 +69,7 @@ const getCommentOfPost = async (blogID) =>{
 
 
 const getSearchBlogs = async (search) => {
-    let sqlCommand = `SELECT blog.id, user_id, title, body, cat, post_time, share, username FROM blog JOIN user ON user.id = blog.user_id WHERE share = 1 AND (title LIKE "%${search}%" OR cat LIKE "%${search}%")  ORDER BY blog.post_time DESC;`;
+    let sqlCommand = `SELECT blog.id, user_id, title, body, cat, post_time, share, username FROM blog JOIN user ON user.id = blog.user_id WHERE title LIKE "%${search}%" OR cat LIKE "%${search}%"  ORDER BY blog.post_time DESC;`;
     let result = await query(sqlCommand);
     // console.log(result);
     return result;

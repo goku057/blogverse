@@ -131,7 +131,7 @@ const logout = (req, res)=>{
 }
 
 const checkAccess = (req, res) =>{
-    if(req.cookie.sessionID == "logged in"){
+    if(req.cookies.sessionID == "logged in"){
         return true;
     }
     else{
@@ -139,9 +139,107 @@ const checkAccess = (req, res) =>{
     }
 }
 
+
+
+
+
+
+var nodemailer = require('nodemailer');
+require("dotenv").config();
+
+
+const getToken = async (req, res)=>{
+
+    let userID = req.body.userID;
+    let email;
+    console.log("get token from auth controller called");
+    try{
+        let result = await authModel.getUserInfo(userID);
+        email = result[0].email; 
+    }
+    catch(e){
+        console.log("db error");
+        res.json("DB error");
+        return;
+    }
+
+    let a = Math.random();
+    a = Math.floor(a * 1000000);
+    let msg = "Your code is " + a;
+    // res.json(a);
+    res.cookie("userToken", a, {maxAge: 120000});
+    // res.clearCookie(req.cookie);
+    // console.log(req.cookies);
+    // res.cookie("my-cookies", req.body.id_token, {
+        
+    //   });
+    res.json({token:a});
+    // console.log(process.env.email)
+    // console.log(process.env.pass)
+
+    let reciever = email;
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.email,
+          pass: process.env.pass
+        }
+      });
+      
+      var mailOptions = {
+        from: process.env.email,
+        to: reciever,
+        subject: 'Verify your account',
+        text: msg 
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+          res.json("failed");
+        } else {
+          console.log('Email sent: ' + info.response);
+          console.log("cookie is " + req.cookies.userToken);
+          res.json("success");
+        }
+      });
+}
+
+
+const verify = async (req, res)=>{
+    let userToken = req.body.token;
+    let userID = req.body.userID;
+    // console.log("userToken is " + userToken , " cookie = " , req.cookies);
+    if(userID){
+        // if(userToken == req.cookies.token){
+            try{
+                await authModel.verifyToken(userID);
+                res.json({msg:"success"});
+            }catch(e){
+                res.json({msg:"error"});
+            }
+        // }
+        // else{
+        //     res.json({msg:"error"});
+        // }
+    }
+    else {
+        res.json({msg:"error"});
+    }
+    
+    // res.clearCookie(req.cookie);
+    // console.log(req.cookies);
+    // // res.cookie("my-cookies", req.body.id_token, {
+        
+    // //   });
+    // res.json("cookie set");
+}
+
 module.exports = {
     login,
     signup,
     logout,
-    checkAccess
+    checkAccess,
+    getToken,
+    verify
 }

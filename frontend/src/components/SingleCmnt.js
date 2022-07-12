@@ -22,6 +22,9 @@ import Blogs from './Blogs';
 
 import { Box, TextField, } from '@mui/material';
 
+import Moment from "moment";
+
+
 const SingleCmnt = (props) => {
     let cmnt = props;
     return (
@@ -40,7 +43,7 @@ const SingleCmnt = (props) => {
                 <div style={{display:"flex", flexDirection:"column", alignContent:"center"}}>
                     <Typography>Commented By:{cmnt.username}</Typography>
                     <Typography variant='p' padding={3} textAlign="center"> {cmnt.cmntBody}</Typography>
-                    <Typography variant='p' padding={0} textAlign="center">commented on {cmnt.postTime}</Typography>
+                    <Typography variant='p' padding={0} textAlign="center">commented on {Moment(cmnt.postTime).format("LLL")}</Typography>
                 </div>
             </Box>
         </div>

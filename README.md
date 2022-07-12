@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Getting Started with BlogVerse
+To run this app node, npm, npx and mysql(xampp) needs to be installed 
+its great if nodemon is installed
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Steps To run the program
 
-## Available Scripts
+## `MySql Database setup`
+create a database named `blogverse` and import the `blogverse.sql` file into the database
+I have created 3 verified dummy users who can login and already has some dummy posts and comments.
+For new users they have to signup and get their id verified
+### `dummy username and their passwords`
+username = `dummy1`
+password = `1234`
 
-In the project directory, you can run:
+username = `dummy2`
+password = `1234`
 
-### `npm start`
+username = `dummy3`
+password = `1234`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+and `run your xampp server`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## `Backend Setup`
 
-### `npm test`
+### `setting up .env file for email verification`
+from `blogverse` directory go to `cd backend` and create an .env file and put the following credentials
+`email='your google email'` (from which mail you will send verification mail to users)
+`pass='your google app password` 
+to make this work you need to make sure that you have placed app pass word for `pass` variable
+[Click here to get a tutorial on how to get APP password](https://www.youtube.com/watch?v=xvX4gWRWIVY)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `running backend server`
+from `blogverse` directory go to `cd backend` and type the following commands in the terminal
+`npm install`
+`nodemon app` (make sure you have nodemon installed)
+if it is success the server will be up on [http://localhost:5000](http://localhost:5000)
 
-### `npm run build`
+## `Front end setup`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+from `blogverse` directory go to `cd frontend` and type the following commands in the terminal
+`npm install`
+`npm start`
+if it is success the server will be up on [http://localhost:3000](http://localhost:3000)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+after that you are free to use the app

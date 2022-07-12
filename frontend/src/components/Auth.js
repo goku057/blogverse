@@ -69,7 +69,7 @@ const Auth = () => {
                 else{
                     console.log("couldnt login");
                     // alert("Couldnt login");
-                    confirm("Your username and pass is mismatched");
+                    window.alert("Your username and pass is mismatched");
                 }
                 console.log(data);
         });

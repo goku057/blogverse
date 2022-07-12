@@ -62,6 +62,7 @@ const BlogForm = (props) => {
         }
         if(result){
             console.log("submitted");
+            window.alert("Success!!!");
             navigate("/myBlogs");
         }
         
@@ -100,7 +101,7 @@ const BlogForm = (props) => {
 
             <TextField 
             onChange={handleChange} name="cat" value={inputs.cat} 
-            placeholder='Write your post category or tags' type={"text"} margin='normal' required />
+            placeholder='Write your post category' type={"text"} margin='normal' required />
 
             <TextareaAutosize
             

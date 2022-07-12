@@ -28,6 +28,9 @@ const authSlice = createSlice(
             },
             setSearchResult(state, action){
                 state.search = action.payload.search
+            },
+            accountVerifyTrue(state){
+                state.verified = 1
             }
         }
     }

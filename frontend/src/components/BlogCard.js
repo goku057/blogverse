@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import ShareIcon from '@mui/icons-material/Share';
 import Blogs from './Blogs';
 import Comment from './Comment';
+import Moment from 'moment';
 
 const BlogCard = (props) => {
     let blog = props;
@@ -69,7 +70,7 @@ const BlogCard = (props) => {
 
     const delet = async () => {
         let a;
-        a = await confirm("Are your sure you want to delete this item");
+        a = window.confirm("Are your sure you want to delete this item");
         if(a === true){
             let data = {
                 userID : sessionInfo.userID,
@@ -81,7 +82,8 @@ const BlogCard = (props) => {
                 result = await axios.post("http://localhost:5000/blog/deleteBlog", data)
                 if(result){
                     alert("Your post has been deleted");
-                    navigate("/blogs");
+                    // navigate("/blogs");
+                    blog.upd();
                 }
                 else{
                     alert("Could not delete post");
@@ -106,7 +108,7 @@ const BlogCard = (props) => {
             return;
         }
         let a;
-        a = await confirm("Are your sure you want to share this item");
+        a = window.confirm("Are your sure you want to share this item");
         if(a === true){
             let data = {
                 userID : sessionInfo.userID,
@@ -137,13 +139,17 @@ const BlogCard = (props) => {
         <div style={styl}>
             <Card sx={{
                 width: "40%",
-                margin: "auto"
-
+                margin: "auto",
+                
+                boxShadow: "10px 10px 20px #ccc",
+                padding:"3px",
+                marginTop:"10px",
+                borderRadius:"5px"
             }}>
                 <CardHeader
 
                     title={blog.title}
-                    subheader={blog.postTime}
+                    subheader={Moment(blog.postTime).format("LLL")}
                 />
 
                 <CardContent>
@@ -159,9 +165,14 @@ const BlogCard = (props) => {
                           {blog.body} 
                     </Typography>
                 }
-                <Typography display="flex" alignContent={"center"} justifyContent={"left"} variant="body2" color="text.secondary">
-                        posted by: {blog.username}
+
+                <Typography marginTop={"5px"} display="flex" alignContent={"center"} justifyContent={"left"} variant="body2" color="text.secondary">
+                        Category: {blog.cat}
                     </Typography>
+                <Typography display="flex" marginTop={"5px"} alignContent={"center"} justifyContent={"left"} variant="body2" color="text.secondary">
+                        posted by: {blog.username}
+                </Typography>
+            
                 </CardContent>
                 <CardActions sx={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                     <IconButton aria-label="share">

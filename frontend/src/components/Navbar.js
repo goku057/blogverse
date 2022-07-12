@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { AppBar, Button, Toolbar, Typography, Tabs, Tab, TextField } from "@mui/material"
 import { Box } from '@mui/system'
@@ -43,7 +43,8 @@ const Navbar = () => {
         dispatch(authActions.logout());
     }
 
-    
+    const [finalSearch, setFinalSearch] = useState(0);    
+
     const handleSearchSubmit = (e)=>{
         e.preventDefault();
         let data = {
@@ -51,12 +52,34 @@ const Navbar = () => {
         }
         dispatch(authActions.setSearchResult(data));
         setSearchInput("");
-        navigate("/search")
+        setFinalSearch(finalSearch + 1);
+        navigate("/dummy")
+        // window.location.reload();
         
     }
     const changeSearchInput = (e)=>{
         setSearchInput(e.target.value);
     }
+    
+    const [focusVal, setFocusVal] = useState(0);
+    const changeVal = (e)=>{
+        if(e.target.text == "NewsFeed"){
+            setFocusVal(0);
+        }
+        else if(e.target.text == "Create Post"){
+            setFocusVal(1);
+        }
+        else{
+            setFocusVal(0);
+        }
+    }
+
+
+    // useEffect(()=>{
+
+    // },[finalSearch]);
+
+
 
     return (
         <AppBar position='sticky' sx={AppbarCssSetting}>
@@ -72,9 +95,9 @@ const Navbar = () => {
                 </form>}
                 <div style={{display: "flex"}}>
                 {isLoggedIn && <Box display={"flex"} marginLeft="auto">
-                <Tabs textColor='inherit' value={0}>
-                    <Tab LinkComponent={Link} to={"/blogs"} label="NewsFeed" />
-                    <Tab LinkComponent={Link} to={"/blogs/add"} label="Create Post" />
+                <Tabs TabIndicatorProps={{style: {background:'#41A317'}}} textColor='inherit' value={focusVal} onClick={changeVal}>
+                    <Tab LinkComponent={Link} to={"/blogs"}  label="NewsFeed" />
+                    <Tab LinkComponent={Link} to={"/blogs/add"}  label="Create Post" />
                 </Tabs>
             </Box>}
 
@@ -82,9 +105,7 @@ const Navbar = () => {
                 {!isLoggedIn && <Button LinkComponent={Link} to="/auth" sx={buttonColor}>
                     Login
                 </Button>}
-                {!isLoggedIn && <Button LinkComponent={Link} to="/auth" sx={buttonColor}>
-                    Register
-                </Button>}
+                
 
                 {isLoggedIn && <div style={{ display: "flex", color:"white" }}>
                     <Button

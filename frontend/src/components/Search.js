@@ -38,6 +38,11 @@ const Search = () => {
             navigate("/auth");
             return;
         }
+        if(sessionInfo.verified === 0){
+            navigate("/verify");
+            return;
+        }
+        
 
         getBlogs().then( data => setBlogs(data)).then(() =>{
             // console.log("databse er kam shesh");
@@ -48,7 +53,7 @@ const Search = () => {
     // console.log( blogs);
     return (
         <div>
-            <h1>{blogs ? blogs.map( (val, index) => (<BlogCard key={val.id} blogID = {val.id} title={val.title} body={val.body} cat={val.cat} postTime={val.post_time} username={val.username} userID={val.user_id} />)) : "No posts available"}</h1>
+            <h1>{blogs.length ? blogs.map( (val, index) => (<BlogCard key={val.id} blogID = {val.id} title={val.title} body={val.body} cat={val.cat} postTime={val.post_time} username={val.username} userID={val.user_id} />)) : <div style={{display:"flex", minHeight:"300px", alignContent:"center", flexDirection:"row", justifyContent:"center", alignItems:"center", textAlign:"center"}}>We have found no posts that matches with your search</div>}</h1>
         </div>
     );
 };

@@ -129,7 +129,7 @@ const Comment = (props) => {
                     <Button sx={{ maxWidth: "100px" }} type="submit">Comment</Button>
                 </form>
             </Box>
-            {cmnts ? cmnts.map( val => <SingleCmnt cmntBody={val.body} username={val.username} postTime={val.post_time} />) : "No comments have been done"}
+            {cmnts ? cmnts.map( val => <SingleCmnt key={val.id} cmntBody={val.body} username={val.username} postTime={val.post_time} />) : "No comments have been done"}
         </div>
     );
 };

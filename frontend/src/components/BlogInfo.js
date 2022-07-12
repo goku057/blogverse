@@ -35,6 +35,10 @@ const BlogInfo = () => {
             navigate("/auth");
             return;
         }
+        if(sessionInfo.verified === 0){
+            navigate("/verify");
+            return;
+        }
 
         getBlogs().then( data => setBlogs(data)).then(() =>{
             // console.log("databse er kam shesh");
