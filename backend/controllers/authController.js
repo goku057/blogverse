@@ -105,6 +105,7 @@ const signup = async (req, res) =>{
                 valid: true,
                 verified: 0,
                 userID : people[0].id,
+                username:people[0].username,
                 msg: "success"
             }
             // console.log(data.userID);

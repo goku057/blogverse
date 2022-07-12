@@ -55,7 +55,8 @@ const Auth = () => {
                     navigate("/blogs");
                 }
                 else{
-                    console.log("couldnt login");
+                    console.log("user name is taken");
+                    alert("user name is taken");
                 }
                 console.log(data);
         });
